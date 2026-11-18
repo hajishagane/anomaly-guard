@@ -5,18 +5,10 @@ from xgboost import XGBClassifier
 from sklearn.ensemble import IsolationForest
 from sklearn.metrics import f1_score, precision_score, recall_score, classification_report
 
-FEATURE_NAMES = [
-    "amount_kes",
-    "time_since_last_tx",
-    "tx_count_15min",
-    "tx_count_24h",
-    "hour_of_day",
-    "is_weekend",
-    "orig_balance_zeroed",
-    "amount_over_orig_balance",
-    "balance_change_orig",
-    "dest_balance_after",
-]
+from features import FEATURE_NAMES
+
+# Alias kept for readability; training uses the canonical 10-feature list.
+MODEL_FEATURE_NAMES = FEATURE_NAMES
 
 
 def train_models():
@@ -29,9 +21,9 @@ def train_models():
     train = df.iloc[:split_idx]
     val = df.iloc[split_idx:]
 
-    X_train = train[FEATURE_NAMES].values
+    X_train = train[MODEL_FEATURE_NAMES].values
     y_train = train["isFraud"].values
-    X_val = val[FEATURE_NAMES].values
+    X_val = val[MODEL_FEATURE_NAMES].values
     y_val = val["isFraud"].values
 
     print(f"Training: {len(train)} samples ({y_train.sum()} fraud)")

@@ -3,11 +3,18 @@ from datetime import timedelta
 FEATURE_NAMES = [
     "amount_kes",
     "time_since_last_tx",
-    "tx_count_15min",
+    "tx_count_1h",
     "tx_count_24h",
     "hour_of_day",
     "is_weekend",
+    "orig_balance_zeroed",
+    "amount_over_old_balance",
+    "balance_change_orig",
+    "dest_balance_after",
 ]
+
+# The 10 features the trained model expects, in order.
+MODEL_FEATURE_NAMES = FEATURE_NAMES
 
 def compute_velocity_features(session, origin_account_id, timestamp, TransactionModel):
     """
